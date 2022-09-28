@@ -1,6 +1,8 @@
 import os
 import wx
 
+from isamples_inabox.isb_lib.data_import import csv_import
+
 
 class OpenFileButton(wx.Button):
     def __init__(self, panel: wx.Panel, label: str, text: wx.TextCtrl):
@@ -9,7 +11,7 @@ class OpenFileButton(wx.Button):
 
     def on_button_click(self, e):
         wildcard = "TSV (*.tsv)|*.tsv"
-        dlg = wx.FileDialog(self, "Choose a file", os.getcwd(), "No file selected", wildcard, wx.FD_OPEN)
+        dlg = wx.FileDialog(self, "Choose", os.getcwd(), "No file selected", wildcard, wx.FD_OPEN)
 
         if dlg.ShowModal() == wx.ID_OK:
             self.text.SetValue(dlg.GetPath())
@@ -18,7 +20,7 @@ class OpenFileButton(wx.Button):
 class MainFrame(wx.Frame):
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, title=title, size=(450, 200))
-        self.file_button = None
+        self.open_file_button = None
         self.init_ui()
         self.Show(True)
 
@@ -33,14 +35,19 @@ class MainFrame(wx.Frame):
         action_button = wx.Button(pnl, label="Validate Data")
         hbox.Add(action_button)
         vbox.Add(hbox, flag=wx.ALIGN_CENTRE)
-        self.Bind(wx.EVT_BUTTON, self.perform_merge, action_button)
+        self.Bind(wx.EVT_BUTTON, self.do_validation, action_button)
 
         pnl.SetSizer(vbox)
         self.Centre()
         self.Show(True)
 
-    def perform_merge(self, e):
-        print("Doing validation!")
+    def do_validation(self, e):
+        package = csv_import.create_isamples_package(MainFrame.open_file_button.text)
+        report = package.validate()
+        if report.valid:
+            wx.MessageBox("Validation successful.", 'Info', wx.OK | wx.ICON_INFORMATION)
+        else:
+            wx.MessageBox("Validation unsuccessful.", 'Info', wx.OK | wx.ICON_INFORMATION)
 
     @staticmethod
     def file_path_read_only_text(pnl: wx.Panel) -> wx.TextCtrl:

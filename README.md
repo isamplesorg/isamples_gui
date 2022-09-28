@@ -8,3 +8,5 @@ Repository for the iSamples GUI app
 2. poetry install
 ### Building the app on macOS
 `python setup.py py2app`
+### Building the app on Windows
+`python setup.py py2exe` (Danny's best guess -- we still need to add this to the project dependencies)
