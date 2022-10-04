@@ -1,6 +1,6 @@
 import os
 import wx
-import csv_import
+from isamples_frictionless import isamples_frictionless
 
 
 class OpenFileButton(wx.Button):
@@ -44,7 +44,7 @@ class MainFrame(wx.Frame):
         self.Show(True)
 
     def validate_package(self, e):
-        package = csv_import.create_isamples_package(self.open_file_button.text.Value)
+        package = isamples_frictionless.create_isamples_package(self.open_file_button.text.Value)
         report = package.validate()
         if report.valid:
             wx.MessageBox("Validation successful.", 'Info', wx.OK | wx.ICON_INFORMATION)

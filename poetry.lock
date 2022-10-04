@@ -143,6 +143,22 @@ optional = false
 python-versions = ">=3.5"
 
 [[package]]
+name = "isamples-frictionless"
+version = "0.1.0"
+description = ""
+category = "main"
+optional = false
+python-versions = "^3.9"
+develop = true
+
+[package.dependencies]
+frictionless = "4.40.8"
+
+[package.source]
+type = "directory"
+url = "isamples_frictionless"
+
+[[package]]
 name = "isodate"
 version = "0.6.1"
 description = "An ISO 8601 date/time/duration parser and formatter"
@@ -571,7 +587,7 @@ six = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "2be323bb55a13a8e5c53d51b2746f11f5b11d25a7ab834fac1386021e75875cc"
+content-hash = "c40970f573b664a9d5839e81359517ed08f4d75f3036f44e1a8075392cfce202"
 
 [metadata.files]
 altgraph = []
@@ -595,6 +611,7 @@ decorator = [
 ]
 frictionless = []
 idna = []
+isamples-frictionless = []
 isodate = []
 jinja2 = []
 jsonschema = []
