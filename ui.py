@@ -1,7 +1,6 @@
 import os
 import wx
-
-from isamples_inabox.isb_lib.data_import import csv_import
+import csv_import
 
 
 class OpenFileButton(wx.Button):
@@ -77,9 +76,9 @@ class MainFrame(wx.Frame):
         label = wx.StaticText(pnl)
         label.SetLabel("File Path:")
 
-        hbox.Add(label, proportion=0.25, flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
-        hbox.Add(file_path_text, proportion=1, flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
-        hbox.Add(open_file_button, proportion=0.75, flag=wx.RIGHT | wx.ALIGN_CENTER_VERTICAL)
+        hbox.Add(label, flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
+        hbox.Add(file_path_text, flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
+        hbox.Add(open_file_button, flag=wx.RIGHT | wx.ALIGN_CENTER_VERTICAL)
 
         vbox.Add((0, 30))
         vbox.Add(hbox, flag=wx.ALIGN_CENTRE)
