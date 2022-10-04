@@ -40,6 +40,7 @@ class MainFrame(wx.Frame):
         self.open_schema_button = None
         self.open_file_button = None
         self.validate_button = None
+        self.accel_tbl = None
         self._schema = None
         self.init_ui()
         self.Show(True)
@@ -62,9 +63,24 @@ class MainFrame(wx.Frame):
         vbox.Add(hbox, flag=wx.ALIGN_CENTRE)
         self.Bind(wx.EVT_BUTTON, self.validate_package, self.validate_button)
 
+        menu_bar = wx.MenuBar()
+        file_menu = wx.Menu()
+
+        quit_menu_item = file_menu.Append(wx.NewId(), item="Quit     ⌘Q")
+        self.Bind(wx.EVT_MENU, self.on_exit, quit_menu_item)
+
+        menu_bar.Append(file_menu, "File")
+        self.SetMenuBar(menu_bar)
+
+        self.accel_tbl = wx.AcceleratorTable([(wx.ACCEL_CMD, ord("Q"), quit_menu_item.GetId())])
+        self.SetAcceleratorTable(self.accel_tbl)
+
         pnl.SetSizer(vbox)
         self.Centre()
         self.Show(True)
+
+    def on_exit(self, event):
+        self.Close()
 
     def validate_package(self, e):
         package = isamples_frictionless.create_isamples_package(self._schema, self.open_file_button.text.Value)
