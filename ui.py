@@ -54,6 +54,7 @@ class MainFrame(wx.Frame):
         self.open_file_button = MainFrame.construct_hbox(pnl, vbox, "Choose Data File")
         self.Bind(wx.EVT_BUTTON, self.open_file_button.on_button_click, self.open_file_button)
         self.Bind(wx.EVT_TEXT, self.validate_file_path_text, self.open_file_button.text)
+        self.Bind(wx.EVT_CHAR_HOOK, self.key_down, self.open_file_button.text)
 
         vbox.Add((0, 30))
         hbox = wx.BoxSizer(wx.HORIZONTAL)
@@ -99,7 +100,17 @@ class MainFrame(wx.Frame):
         schema_path = self.open_schema_button.text.Value
         schema = isamples_frictionless.check_valid_schema_json(schema_path)
         self._schema = schema
-        self.validate_button.Enable(date_file_valid and schema is not None)
+
+        valid = date_file_valid and schema is not None
+        self.validate_button.Enable(valid)
+
+    def key_down(self, e):
+        if e.GetKeyCode() == wx.WXK_RETURN:
+            self.validate_file_path_text(e)
+            if self.validate_button.Enabled:
+                self.validate_package(e)
+        else:
+            e.Skip()
 
     @staticmethod
     def file_path_read_only_text(pnl: wx.Panel) -> wx.TextCtrl:
