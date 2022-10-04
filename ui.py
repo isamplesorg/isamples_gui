@@ -3,6 +3,24 @@ import wx
 from isamples_frictionless import isamples_frictionless
 
 
+class ValidationErrorsDialog(wx.Frame):
+   def __init__(self, parent, title, errors_text: str):
+      super(ValidationErrorsDialog, self).__init__(parent, title = title, size = (1000, 200))
+      pnl = wx.Panel(self)
+      vbox = wx.BoxSizer(wx.VERTICAL)
+      hbox1 = wx.BoxSizer(wx.HORIZONTAL)
+
+      self.text = wx.TextCtrl(pnl, size=(1000, 200), style=wx.TE_MULTILINE)
+      self.text.Value = errors_text
+      hbox1.Add(self.text, proportion=1, flag=wx.EXPAND)
+      vbox.Add(hbox1, proportion=1, flag=wx.EXPAND)
+
+      pnl.SetSizer(vbox)
+      self.Centre()
+      self.Show(True)
+
+
+
 class OpenFileButton(wx.Button):
     def __init__(self, panel: wx.Panel, label: str, text: wx.TextCtrl):
         super().__init__(parent=panel, label=label)
@@ -54,7 +72,8 @@ class MainFrame(wx.Frame):
         if report.valid:
             wx.MessageBox("Validation successful.", 'Info', wx.OK | wx.ICON_INFORMATION)
         else:
-            wx.MessageBox("Validation unsuccessful.", 'Info', wx.OK | wx.ICON_INFORMATION)
+            errors = isamples_frictionless.report_errors_as_str(report)
+            ValidationErrorsDialog(self, "Validation Errors", errors)
 
     def validate_file_path_text(self, e):
         date_file_valid = False
