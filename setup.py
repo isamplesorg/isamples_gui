@@ -10,7 +10,9 @@ from setuptools import setup
 APP = ['main.py']
 DATA_FILES = []
 OPTIONS = {
-    "packages": ["isamples_frictionless"]
+    # This is required in order to make the imports work -- otherwise it gets flattened
+    "packages": ["isamples_frictionless"],
+    "resources": ["isamples_frictionless/isamples_simple_schema.json"]
 }
 
 setup(

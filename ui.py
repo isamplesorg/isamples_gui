@@ -18,16 +18,21 @@ class OpenFileButton(wx.Button):
 
 class MainFrame(wx.Frame):
     def __init__(self, parent, title):
-        wx.Frame.__init__(self, parent, title=title, size=(450, 200))
+        wx.Frame.__init__(self, parent, title=title, size=(600, 200))
+        self.open_schema_button = None
         self.open_file_button = None
         self.validate_button = None
+        self._schema = None
         self.init_ui()
         self.Show(True)
 
     def init_ui(self):
         pnl = wx.Panel(self)
         vbox = wx.BoxSizer(wx.VERTICAL)
-        self.open_file_button = MainFrame.construct_hbox(pnl, vbox, "Choose File")
+        self.open_schema_button = MainFrame.construct_hbox(pnl, vbox, "Choose Schema File")
+        resource_path = os.environ.get("RESOURCEPATH") or ""
+        self.open_schema_button.text.Value = os.path.join(resource_path, isamples_frictionless.DEFAULT_SCHEMA_FILE_NAME)
+        self.open_file_button = MainFrame.construct_hbox(pnl, vbox, "Choose Data File")
         self.Bind(wx.EVT_BUTTON, self.open_file_button.on_button_click, self.open_file_button)
         self.Bind(wx.EVT_TEXT, self.validate_file_path_text, self.open_file_button.text)
 
@@ -44,7 +49,7 @@ class MainFrame(wx.Frame):
         self.Show(True)
 
     def validate_package(self, e):
-        package = isamples_frictionless.create_isamples_package(self.open_file_button.text.Value)
+        package = isamples_frictionless.create_isamples_package(self._schema, self.open_file_button.text.Value)
         report = package.validate()
         if report.valid:
             wx.MessageBox("Validation successful.", 'Info', wx.OK | wx.ICON_INFORMATION)
@@ -52,11 +57,14 @@ class MainFrame(wx.Frame):
             wx.MessageBox("Validation unsuccessful.", 'Info', wx.OK | wx.ICON_INFORMATION)
 
     def validate_file_path_text(self, e):
-        validate_button_enabled = False
-        file_path = e.EventObject.Value
+        date_file_valid = False
+        file_path = self.open_file_button.text.Value
         if os.path.exists(file_path):
-            validate_button_enabled = True
-        self.validate_button.Enable(validate_button_enabled)
+            date_file_valid = True
+        schema_path = self.open_schema_button.text.Value
+        schema = isamples_frictionless.check_valid_schema_json(schema_path)
+        self._schema = schema
+        self.validate_button.Enable(date_file_valid and schema is not None)
 
     @staticmethod
     def file_path_read_only_text(pnl: wx.Panel) -> wx.TextCtrl:
