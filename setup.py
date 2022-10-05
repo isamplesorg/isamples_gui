@@ -12,7 +12,8 @@ DATA_FILES = []
 OPTIONS = {
     # This is required in order to make the imports work -- otherwise it gets flattened
     "packages": ["isamples_frictionless"],
-    "resources": ["isamples_frictionless/isamples_simple_schema.json"]
+    "resources": ["isamples_frictionless/isamples_simple_schema.json"],
+    "iconfile": "isampleslogo.icns"
 }
 
 setup(
