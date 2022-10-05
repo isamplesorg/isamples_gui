@@ -7,7 +7,7 @@ Usage:
 
 from setuptools import setup
 
-APP = ['main.py']
+APP = ['iSamplesGUI.py']
 DATA_FILES = []
 OPTIONS = {
     # This is required in order to make the imports work -- otherwise it gets flattened

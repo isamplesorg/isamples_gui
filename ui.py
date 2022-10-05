@@ -34,6 +34,8 @@ class OpenFileButton(wx.Button):
             self.text.SetValue(dlg.GetPath())
 
 
+HORIZONTAL_SPACER_PIXELS = 5
+
 class MainFrame(wx.Frame):
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, title=title, size=(600, 200))
@@ -48,17 +50,17 @@ class MainFrame(wx.Frame):
     def init_ui(self):
         pnl = wx.Panel(self)
         vbox = wx.BoxSizer(wx.VERTICAL)
-        self.open_schema_button = MainFrame.construct_hbox(pnl, vbox, "Choose Schema File")
+        self.open_schema_button = MainFrame.construct_hbox(pnl, vbox, "Schema File Path:", "Choose Schema File")
         resource_path = os.environ.get("RESOURCEPATH") or ""
         self.open_schema_button.text.Value = os.path.join(resource_path, isamples_frictionless.DEFAULT_SCHEMA_FILE_NAME)
-        self.open_file_button = MainFrame.construct_hbox(pnl, vbox, "Choose Data File")
+        self.open_file_button = MainFrame.construct_hbox(pnl, vbox, "Data File Path:", "Choose Data File")
         self.Bind(wx.EVT_BUTTON, self.open_file_button.on_button_click, self.open_file_button)
         self.Bind(wx.EVT_TEXT, self.validate_file_path_text, self.open_file_button.text)
         self.Bind(wx.EVT_CHAR_HOOK, self.key_down, self.open_file_button.text)
 
         vbox.Add((0, 30))
         hbox = wx.BoxSizer(wx.HORIZONTAL)
-        self.validate_button = wx.Button(pnl, label="Validate Data")
+        self.validate_button = wx.Button(pnl, label="Validate Data File")
         self.validate_button.Enable(False)
         hbox.Add(self.validate_button)
         vbox.Add(hbox, flag=wx.ALIGN_CENTRE)
@@ -121,17 +123,19 @@ class MainFrame(wx.Frame):
         return OpenFileButton(pnl, button_text, text)
 
     @staticmethod
-    def construct_hbox(pnl: wx.Panel, vbox: wx.BoxSizer, button_text: str) -> tuple:
+    def construct_hbox(pnl: wx.Panel, vbox: wx.BoxSizer, label_text: str, button_text: str) -> tuple:
         hbox = wx.BoxSizer(wx.HORIZONTAL)
 
         file_path_text = MainFrame.file_path_read_only_text(pnl)
         open_file_button = MainFrame.open_file_button(pnl, file_path_text, button_text)
 
         label = wx.StaticText(pnl)
-        label.SetLabel("File Path:")
+        label.SetLabel(label_text)
 
         hbox.Add(label, flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
+        hbox.AddSpacer(HORIZONTAL_SPACER_PIXELS)
         hbox.Add(file_path_text, flag=wx.ALIGN_LEFT | wx.ALIGN_CENTER_VERTICAL)
+        hbox.AddSpacer(HORIZONTAL_SPACER_PIXELS)
         hbox.Add(open_file_button, flag=wx.RIGHT | wx.ALIGN_CENTER_VERTICAL)
 
         vbox.Add((0, 30))
