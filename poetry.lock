@@ -144,19 +144,21 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "isamples-frictionless"
-version = "0.1.0"
-description = ""
+version = "0.1.4"
+description = "iSamples integration with frictionless.io"
 category = "main"
 optional = false
 python-versions = "^3.9"
-develop = true
+develop = false
 
 [package.dependencies]
 frictionless = "4.40.8"
 
 [package.source]
-type = "directory"
-url = "isamples_frictionless"
+type = "git"
+url = "https://github.com/isamplesorg/isamples_frictionless.git"
+reference = "main"
+resolved_reference = "863d63c89fec0dfc9fda395895a13ca8f8e54336"
 
 [[package]]
 name = "isodate"
@@ -587,7 +589,7 @@ six = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "c40970f573b664a9d5839e81359517ed08f4d75f3036f44e1a8075392cfce202"
+content-hash = "6b870fced3681dc7c721d5bb5290b80a862a3f2cc953f31004ac1b6bea077347"
 
 [metadata.files]
 altgraph = []

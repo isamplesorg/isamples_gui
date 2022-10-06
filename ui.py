@@ -1,6 +1,6 @@
 import os
 import wx
-from isamples_frictionless import isamples_frictionless
+import isamples_frictionless
 
 
 class ValidationErrorsDialog(wx.Frame):

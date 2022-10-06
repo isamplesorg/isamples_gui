@@ -8,7 +8,7 @@ authors = ["Danny Mandel <danny.mandel@gmail.com>"]
 python = "^3.9"
 py2app = "^0.28.2"
 wxPython = "^4.1.0"
-isamples_frictionless = { path = "isamples_frictionless", develop = true }
+isamples_frictionless = {git = "https://github.com/isamplesorg/isamples_frictionless.git", rev = "main"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
