@@ -1,6 +1,19 @@
 import os
 import wx
 import isamples_frictionless
+import sys
+from sys import platform
+
+
+# load the icon
+def get_resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
 
 
 class ValidationErrorsDialog(wx.Frame):
@@ -36,6 +49,7 @@ class OpenFileButton(wx.Button):
 
 HORIZONTAL_SPACER_PIXELS = 5
 
+
 class MainFrame(wx.Frame):
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, title=title, size=(600, 200))
@@ -46,12 +60,16 @@ class MainFrame(wx.Frame):
         self._schema = None
         self.init_ui()
         self.Show(True)
+        if platform == "win32":
+            Logo = get_resource_path("isampleslogo.ico")
+            # set windows icon
+            self.SetIcon(wx.Icon(get_resource_path(Logo)))
 
     def init_ui(self):
         pnl = wx.Panel(self)
         vbox = wx.BoxSizer(wx.VERTICAL)
         self.open_schema_button = MainFrame.construct_hbox(pnl, vbox, "Schema File Path:", "Choose Schema File")
-        resource_path = os.environ.get("RESOURCEPATH") or ""
+        resource_path = os.environ.get("RESOURCEPATH") or get_resource_path("")
         self.open_schema_button.text.Value = os.path.join(resource_path, isamples_frictionless.DEFAULT_SCHEMA_FILE_NAME)
         self.open_file_button = MainFrame.construct_hbox(pnl, vbox, "Data File Path:", "Choose Data File")
         self.Bind(wx.EVT_BUTTON, self.open_file_button.on_button_click, self.open_file_button)
