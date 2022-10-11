@@ -71,7 +71,7 @@ class MainFrame(wx.Frame):
         self.open_schema_button = MainFrame.construct_hbox(pnl, vbox, "Schema File Path:", "Choose Schema File")
         resource_path = os.environ.get("RESOURCEPATH") or get_resource_path("")
         self.open_schema_button.text.Value = os.path.join(resource_path, isamples_frictionless.DEFAULT_SCHEMA_FILE_NAME)
-        self.open_file_button = MainFrame.construct_hbox(pnl, vbox,"Data File Path:", "Choose Data File")
+        self.open_file_button = MainFrame.construct_hbox(pnl, vbox, "Data File Path:", "Choose Data File")
         self.Bind(wx.EVT_BUTTON, self.open_file_button.on_button_click, self.open_file_button)
         self.Bind(wx.EVT_TEXT, self.validate_file_path_text, self.open_file_button.text)
         self.Bind(wx.EVT_CHAR_HOOK, self.key_down, self.open_file_button.text)
