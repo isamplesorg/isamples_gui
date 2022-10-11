@@ -13,7 +13,6 @@ def get_resource_path(relative_path):
         base_path = os.path.abspath(".")
     return os.path.join(base_path, relative_path)
 
-Logo = get_resource_path("isampleslogo.ico")
 
 class ValidationErrorsDialog(wx.Frame):
    def __init__(self, parent, title, errors_text: str):
@@ -58,8 +57,6 @@ class MainFrame(wx.Frame):
         self._schema = None
         self.init_ui()
         self.Show(True)
-        # set windows icon
-        self.SetIcon(wx.Icon(get_resource_path(Logo)))
 
     def init_ui(self):
         pnl = wx.Panel(self)
