@@ -18,3 +18,15 @@ frictionless schema file when running the app.
 ### Building the app on Windows
 1. Configuring dependency : update the `python` and `pyinstaller` dependency.
 2. Build the app :  `pyinstaller --onedir --windowed -n iSamplesGUI --add-data "isampleslogo.ico;." --add-data "isamples_frictionless/isamples_frictionless/isamples_simple_schema.json;." --icon="isampleslogo.ico" --collect-all frictionless iSamplesGUI.py`
+#### Miscellaneous
+When testing, my environment got broken with this error:
+
+```
+"ModuleNotFoundError: No module named 'pkg_resources'"
+```
+
+I fixed it like this:
+
+```
+ pip install setuptools --upgrade 
+```
