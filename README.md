@@ -17,12 +17,4 @@ frictionless schema file when running the app.
 `python setup.py py2app`
 ### Building the app on Windows
 1. Configuring dependency : update the `python` and `pyinstaller` dependency.
-2. Download the [frictionless library](https://github.com/frictionlessdata/framework/releases/tag/v4.40.8/) and unzip the `frictionless/` directory to the project root directory. This folder and other necessary static files will be copied manually during the build process as we can see in the  `isamplesGUI.spec` :
-```
-datas=[
-        ('isamples_frictionless/isamples_frictionless/isamples_simple_schema.json','.'),
-        ('isampleslogo.ico','.'),
-        ('frictionless','./frictionless')
-    ],
-```
-3. Build the app by executing the following command `pyinstaller iSamplesGUI.spec`.
+2. Build the app :  `pyinstaller --onedir --windowed -n iSamplesGUI --add-data "isampleslogo.ico;." --add-data "isamples_frictionless/isamples_frictionless/isamples_simple_schema.json;." --icon="isampleslogo.ico" --collect-all frictionless iSamplesGUI.py`
