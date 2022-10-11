@@ -1,4 +1,11 @@
 # -*- mode: python ; coding: utf-8 -*-
+from PyInstaller.utils.hooks import collect_all
+
+datas = [('isamples_frictionless/isamples_frictionless/isamples_simple_schema.json', '.')]
+binaries = []
+hiddenimports = []
+tmp_ret = collect_all('frictionless')
+datas += tmp_ret[0]; binaries += tmp_ret[1]; hiddenimports += tmp_ret[2]
 
 
 block_cipher = None
@@ -7,13 +14,9 @@ block_cipher = None
 a = Analysis(
     ['iSamplesGUI.py'],
     pathex=[],
-    binaries=[],
-    datas=[
-        ('isamples_frictionless/isamples_frictionless/isamples_simple_schema.json','.'),
-        ('isampleslogo.ico','.'),
-        ('frictionless','./frictionless')
-    ],
-    hiddenimports=[],
+    binaries=binaries,
+    datas=datas,
+    hiddenimports=hiddenimports,
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
@@ -41,6 +44,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    icon=['isampleslogo.icns'],
 )
 coll = COLLECT(
     exe,
@@ -55,6 +59,6 @@ coll = COLLECT(
 app = BUNDLE(
     coll,
     name='iSamplesOSX.app',
-    icon=None,
+    icon='isampleslogo.icns',
     bundle_identifier=None,
 )
