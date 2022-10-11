@@ -6,7 +6,6 @@ authors = ["Danny Mandel <danny.mandel@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = ">= 3.9, < 3.11"
-# py2app = "^0.28.2"
 pyinstaller ="^5.4.1"
 wxPython = "^4.1.0"
 isamples_frictionless = {git = "https://github.com/isamplesorg/isamples_frictionless.git", rev = "main"}

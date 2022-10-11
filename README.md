@@ -14,7 +14,7 @@ frictionless schema file when running the app.
 1. `mkvirtualenv isamples_gui` or `workon isamples_gui`
 2. poetry install
 ### Building the app on macOS
-`python setup.py py2app`
+`pyinstaller -i isampleslogo.icns --add-data "isamples_frictionless/isamples_frictionless/isamples_simple_schema.json:." --collect-all frictionless --onedir --windowed -n iSamplesOSX iSamplesGUI.py`
 ### Building the app on Windows
 1. Configuring dependency : update the `python` and `pyinstaller` dependency.
 2. Build the app :  `pyinstaller --onedir --windowed -n iSamplesGUI --add-data "isampleslogo.ico;." --add-data "isamples_frictionless/isamples_frictionless/isamples_simple_schema.json;." --icon="isampleslogo.ico" --collect-all frictionless iSamplesGUI.py`
