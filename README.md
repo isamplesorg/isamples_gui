@@ -15,6 +15,12 @@ frictionless schema file when running the app.
 2. poetry install
 ### Building the app on macOS
 `pyinstaller -i isampleslogo.icns --add-data "isamples_frictionless/isamples_frictionless/isamples_simple_schema.json:." --collect-all frictionless --onedir --windowed -n iSamplesOSX iSamplesGUI.py`
+
+or, shorter:
+
+`pyinstaller iSamplesOSX.spec`
+
+but executing the complicated statement will update the `iSamplesOSX.spec` above, in case there is a need to update in the future.
 ### Building the app on Windows
 1. Configuring dependency : update the `python` and `pyinstaller` dependency.
 2. Build the app :  `pyinstaller --onedir --windowed -n iSamplesGUI --add-data "isampleslogo.ico;." --add-data "isamples_frictionless/isamples_frictionless/isamples_simple_schema.json;." --icon="isampleslogo.ico" --collect-all frictionless iSamplesGUI.py`
