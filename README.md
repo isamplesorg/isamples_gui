@@ -34,5 +34,14 @@ When testing, my environment got broken with this error:
 I fixed it like this:
 
 ```
- pip install setuptools --upgrade
+ pip install setuptools --upgrade 
 ```
+#### Developing in PyCharm on Mac
+I had a problem launching `iSamplesGUI.py` from PyCharm where it would always fail with this error message:
+```
+This program needs access to the screen.
+Please run with a Framework build of python, and only when you are
+logged in on the main display of your Mac.
+```
+
+Worked around it by following the instructions here to create the virtual environment: https://stackoverflow.com/questions/40686592/wxpython-and-pycharm-on-mac and then switching to that virtual environment on the cmd-line and doing a `poetry install`.
